@@ -1,0 +1,34 @@
+
+
+
+Search Airport 
+<input type="text" placeholder="search by name" id="q" name="q">
+<button onclick="handleSearch()">Seach Airport</button>
+
+<script>
+	
+	var handleSearch =  ()=>{
+		console.log("Handling Search");
+		let searchText = document.getElementById("q").value;
+		console.log(searchText);
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET' , '/airports/search/'+ searchText , true);
+		xhr.onreadystatechange= ()=>{
+		
+			if(xhr.readyState == 4 ){
+				let x = xhr.responseText;
+				let el = "";
+				let response= JSON.parse(xhr.responseText);
+				response.forEach(e=>{
+					el = el + "<li>" + e.airportName + "</li>"
+				});
+				document.getElementById("result").innerHTML = el;
+			}
+		}		
+		xhr.send();
+	}
+
+</script>
+
+<div id="result">
+</div>
